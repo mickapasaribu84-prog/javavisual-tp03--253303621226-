@@ -23,7 +23,7 @@ CharacterManager/
 ## Informasi Mahasiswa & Link Laporan
 * **Nama Lengkap:** [Micka Engelica Pasaribu]
 * **NIM:** [253303621262]
-* **Link Google Docs Analisis Desain:** [https://docs.google.com/document/d/1-GuGZEAAyOIBXSY1C3hpibQm1w-c5SSQMT14Mx1MH-o/edit?tab=t.0]
+* **Link Google Docs Analisis Desain:** [https://docs.google.com/document/d/1-GuGZEAAyOIBXSY1C3hpibQm1w-c5SSQMT14Mx1MH-o/edit?usp=sharing]
 
 ## Screenshot Output Program
 ![Output Program](output.png)

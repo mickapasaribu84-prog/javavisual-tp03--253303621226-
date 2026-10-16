@@ -1,5 +1,7 @@
 package com.unpri.charactermanager.model;
 
+import java.util.Objects;
+
 public class Character {
     private String name;
     private CharacterType type;
@@ -9,7 +11,6 @@ public class Character {
     private int mana;
     private boolean isAlive;
 
-    // Constructor 3 parameter
     public Character(String name, CharacterType type, int level) {
         if (level < 0) {
             throw new IllegalArgumentException("Level tidak boleh negatif");
@@ -23,20 +24,6 @@ public class Character {
         this.isAlive = true;
     }
 
-    // Constructor lengkap (7 parameter)
-    public Character(String name, CharacterType type, int level, int hp, int atk, int mana, boolean isAlive) {
-        if (level < 0) {
-            throw new IllegalArgumentException("Level tidak boleh negatif");
-        }
-        this.name = name;
-        this.type = type;
-        this.level = level;
-        this.hp = hp;
-        this.atk = atk;
-        this.mana = mana;
-        this.isAlive = isAlive;
-    }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public CharacterType getType() { return type; }
@@ -44,7 +31,20 @@ public class Character {
     public void setLevel(int level) { this.level = level; }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return name.equalsIgnoreCase(character.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name.toLowerCase());
+    }
+
+    @Override
     public String toString() {
-        return "Character{id=0, name='" + name + "', type=" + type + ", level=" + level + ", hp=" + hp + ", atk=" + atk + ", mana=" + mana + ", isAlive=" + isAlive + "}";
+        return "Character{name='" + name + "', type=" + type + ", level=" + level + ", hp=" + hp + ", atk=" + atk + ", mana=" + mana + ", isAlive=" + isAlive + "}";
     }
 }
