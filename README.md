@@ -5,9 +5,9 @@ Sprint #3 (TP8) ini merupakan transisi besar dari aplikasi berbasis console (TP1
 
 ## 🖼️ Screenshot Aplikasi (`MainWindow`)
 * **Kondisi Awal (5 Karakter):**
-  !output_sebelum_ubah.png
+  ![Screenshot Awal]!output_sebelum_ubah.png
 * **Kondisi Setelah Perubahan (6 Karakter & Statistik Berubah):**
-  !output_setelah_ubah.png
+  ![Screenshot Perubahan]!output_setelah_ubah.png
 
 ## 🔄 Alur Aliran Data (MVC)
 Aliran data dalam aplikasi ini berjalan secara terstruktur: 
