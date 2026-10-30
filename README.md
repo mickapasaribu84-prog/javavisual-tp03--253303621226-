@@ -26,3 +26,19 @@ Aliran data dalam aplikasi ini berjalan secara terstruktur:
 ## 🔗 Tautan Analisis Desain (Google Docs)
 Analisis mendalam mengenai GUI, *Event-Driven*, dan prinsip arsitektur MVC dapat diakses melalui tautan berikut:
 [Google Docs - Analisis GUI & MVC TP8](https://docs.google.com/document/d/15R7Eg3ea84QBOFNA2BMvkpym7Gk6FiCPGKG7yd8zrJ8/edit?usp=sharing)
+
+
+## TP10: Character Manager Sprint #4 (Theming & MVC Analysis)
+
+- **Screenshot Sesudah (v0.4 - AppTheme):** 
+  *(Pastikan screenshot hasil tampilan aplikasimu yang terbaru sudah disimpan di folder project dengan nama `output_sesudah_ubah.png`)*
+
+- **Penjelasan Singkat:**
+  Seluruh properti visual seperti warna, font, dan border dipindahkan secara terpusat ke kelas `AppTheme` pada layer **View**. Hal ini memastikan bahwa layer **Model** (`Character.java`) tetap murni tanpa terikat pustaka GUI (`java.awt`).
+
+- **Properti Tambahan (Mini-Challenge & Bonus):**
+  1. *Highlight Level Tinggi:* Karakter dengan level $\ge 5$ otomatis tampil dengan teks tebal berwarna emas (`AppTheme.GOLD_HIGHLIGHT`).
+  2. *Warna Role Dinamis:* Kartu karakter memiliki warna latar belakang berbeda berdasarkan *role* (Warrior, Mage, Archer) menggunakan `AppTheme.colorFor()`.
+
+- **Link Google Docs Analisis (Bagian D):** 
+  https://docs.google.com/document/d/1RxpGbGyFrAPlwNqKqCyKHcAZr1LCiqrgrbmHHJVzlfQ/edit?usp=sharing
