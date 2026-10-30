@@ -1,5 +1,5 @@
+JAVA VISUAL
 # Character Manager — TP3 (Java Visual SIH-6406)
-
 ## Deskripsi Singkat
 Aplikasi berbasis console Java berorientasi objek (OOP) ini dirancang untuk mengelola data karakter game (seperti Warrior, Mage, Archer, dan Rogue). Proyek ini mengimplementasikan konsep enkapsulasi, validasi state objek menggunakan exception, serta manajemen atribut lanjutan termasuk poin nyawa (`hitPoints`), kekuatan serangan (`attackPower`), dan energi sihir (`mana`).
 
