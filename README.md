@@ -15,6 +15,7 @@ CharacterManager/
                 └── model/
                     ├── Character.java
                     └── CharacterType.java
+```
 
 ## Informasi Mahasiswa & Link Laporan
 - **Nama Lengkap:** [Micka Engelica Pasaribu]
@@ -23,9 +24,9 @@ CharacterManager/
 
 
 
-#  # Character Manager — TP5 (CRUD & Fitur Analitik Rancangan Sendiri)
+# Character Manager — TP5 (CRUD & Fitur Analitik Rancangan Sendiri)
 
-## 📌 Deskripsi Proyek & Fitur CRUD
+## Deskripsi Proyek & Fitur CRUD
 - **Penjelasan Singkat:** Pada TP5 ini, aplikasi dikembangkan dengan menambahkan fungsionalitas lengkap operasi **CRUD (Create, Read, Update, Delete)** pada pengelolaan data karakter, serta penerapan eksperimen *reference* (acuan objek) dan validasi data.
 **[Screenshot](output_tp5.png)
 
