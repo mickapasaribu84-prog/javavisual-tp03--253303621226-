@@ -2,12 +2,11 @@
 
 ## Deskripsi Singkat
 Aplikasi berbasis console Java berorientasi objek (OOP) ini dirancang untuk mengelola data karakter game (seperti Warrior, Mage, Archer, dan Rogue). Proyek ini mengimplementasikan konsep enkapsulasi, validasi state objek menggunakan exception, serta manajemen atribut lanjutan termasuk poin nyawa (`hitPoints`), kekuatan serangan (`attackPower`), dan energi sihir (`mana`).
-**[Screenshot] (disini)
+**[Screenshot] (output_tp3.png)
 
-Struktur Folder Project
+## Struktur Folder Project
+```text
 CharacterManager/
-│
-├── .gitignore
 └── src/
     ├── Main.java
     └── com/
@@ -28,8 +27,7 @@ CharacterManager/
 
 ## 📌 Deskripsi Proyek & Fitur CRUD
 - **Penjelasan Singkat:** Pada TP5 ini, aplikasi dikembangkan dengan menambahkan fungsionalitas lengkap operasi **CRUD (Create, Read, Update, Delete)** pada pengelolaan data karakter, serta penerapan eksperimen *reference* (acuan objek) dan validasi data.
-- **Screenshot Output CRUD:**
-  ![Output CRUD TP5](output_TP5.png)
+**[Screenshot](output_tp5.png)
 
 ## ⚙️ Bagian C — Fitur Analitik Rancangan Sendiri (`findStrongest`)
 - **Nama Method Baru:** `findStrongest()`
@@ -39,7 +37,7 @@ CharacterManager/
 ## 🔗 Informasi Mahasiswa & Link Laporan
 - **Nama Lengkap:** Micka Engelica Pasaribu
 - **NIM:** 253303621262
-- **Link Google Docs Analisis Desain [Bagian D](https://docs.google.com/document/d/1-GuGZEAAyOIBXSY1C3hpibQm1w-c5SSQMT14Mx1MH-o/edit?usp=sharing)
+- [Link Google Docs Analisis Desain](https://docs.google.com/document/d/1-GuGZEAAyOIBXSY1C3hpibQm1w-c5SSQMT14Mx1MH-o/edit?usp=sharing)
 
 
 
@@ -86,4 +84,4 @@ Analisis mendalam mengenai GUI, *Event-Driven*, dan prinsip arsitektur MVC dapat
   1. *Highlight Level Tinggi:* Karakter dengan level $\ge 5$ otomatis tampil dengan teks tebal berwarna emas (`AppTheme.GOLD_HIGHLIGHT`).
   2. *Warna Role Dinamis:* Kartu karakter memiliki warna latar belakang berbeda berdasarkan *role* (Warrior, Mage, Archer) menggunakan `AppTheme.colorFor()`.
 
-- **Link Google Docs Analisis [Bagian D](https://docs.google.com/document/d/1RxpGbGyFrAPlwNqKqCyKHcAZr1LCiqrgrbmHHJVzlfQ/edit?usp=sharing)
+- **[Link Google Docs Analisis](https://docs.google.com/document/d/1RxpGbGyFrAPlwNqKqCyKHcAZr1LCiqrgrbmHHJVzlfQ/edit?usp=sharing)
