@@ -1,35 +1,35 @@
 package com.unpri.charactermanager.view;
 
-import java.awt.Color;
-import java.awt.Font;
+import com.unpri.charactermanager.model.CharacterType;
+import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 public class AppTheme {
-    // 3 Warna Utama
-    public static final Color BG_DARK = Color.decode("#daf416");
-    public static final Color ACCENT_BLUE = Color.decode("#e6a2e0");
-    public static final Color GOLD_HIGHLIGHT = Color.decode("#21201e");
-    
-    // 3 Font (Menggunakan Logical Font untuk keamanan lintas platform)
-    public static final Font FONT_TITLE = new Font("SansSerif", Font.BOLD, 22);
-    public static final Font FONT_BODY = new Font("SansSerif", Font.PLAIN, 14);
-    public static final Font FONT_MONO = new Font("Monospaced", Font.PLAIN, 12);
-    
-    // 1 Border Standar
-    public static final Border PADDING_BORDER = BorderFactory.createEmptyBorder(8, 12, 8, 12);
-    
-    // Konstanta untuk Mini-Challenge Level
-    public static final int MIN_LEVEL_HIGHLIGHT = 5;
+    // 1. Minimum 3 Warna Utama
+    public static final Color COLOR_WARRIOR = new Color(152, 251, 152); // Hijau terang
+    public static final Color COLOR_MAGE = new Color(135, 206, 250);    // Biru terang
+    public static final Color COLOR_ROGUE = new Color(255, 182, 193);   // Pink terang
+    public static final Color COLOR_ARCHER = new Color(238, 232, 170);  // Krem terang
+    public static final Color COLOR_GOLD = new Color(218, 165, 32);     // Warna Emas Mini-Challenge
 
-    // Method colorFor untuk memetakan role ke warna (View responsibility)
-    public static Color colorFor(String role) {
-        if (role == null) return ACCENT_BLUE;
-        switch (role.toUpperCase()) {
-            case "WARRIOR": return Color.decode("#9eee78");
-            case "MAGE": return Color.decode("#8ebbf7");
-            case "ARCHER": return Color.decode("#548bde");
-            default: return ACCENT_BLUE;
+    // 2. Minimum 3 Font (Menggunakan Logical Font)
+    public static final Font FONT_TITLE = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+    public static final Font FONT_REGULAR = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+    public static final Font FONT_HIGH_LEVEL = new Font(Font.MONOSPACED, Font.BOLD, 12); // Teks Emas & Tebal
+
+    // 3. Minimum 1 Border
+    public static final Border PADDING_BORDER = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+
+    // 4. Method colorFor(CharacterType)
+    public static Color colorFor(CharacterType type) {
+        if (type == null) return Color.WHITE;
+        switch (type) {
+            case WARRIOR: return COLOR_WARRIOR;
+            case MAGE: return COLOR_MAGE;
+            case ROGUE: return COLOR_ROGUE;
+            case ARCHER: return COLOR_ARCHER;
+            default: return Color.WHITE;
         }
     }
 }

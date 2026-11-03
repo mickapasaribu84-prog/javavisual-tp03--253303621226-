@@ -29,6 +29,12 @@ public class Character {
     public CharacterType getType() { return type; }
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
+    
+    // Getter tambahan yang tadinya kurang agar bisa dibaca oleh JTable
+    public int getHp() { return hp; }
+    public int getAtk() { return atk; }
+    public int getMana() { return mana; }
+    public boolean isAlive() { return isAlive; }
 
     @Override
     public boolean equals(Object o) {

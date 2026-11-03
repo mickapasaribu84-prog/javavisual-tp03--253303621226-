@@ -5,86 +5,100 @@ import com.unpri.charactermanager.service.CharacterManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
 public class MainWindow extends JFrame {
-    private CharacterManager manager;
-    private JPanel characterListPanel;
-    private JLabel avgLevelLabel;
+    private CharacterManager characterManager;
+    private JList<Character> listKarakter;
+    private DefaultListModel<Character> listModel;
+    private JLabel lblRataRataLevel;
 
-    public MainWindow(CharacterManager manager) {
-        this.manager = manager;
+    // Konstanta bernama untuk Mini-Challenge
+    public static final int HIGH_LEVEL_THRESHOLD = 5;
 
+    public MainWindow(CharacterManager characterManager) {
+        this.characterManager = characterManager;
+        
         setTitle("Character Manager — Sprint #4 (TP10)");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout());
 
-        // Judul Atas menggunakan AppTheme.FONT_TITLE
-        JLabel titleLabel = new JLabel("Daftar Karakter Game", JLabel.CENTER);
-        titleLabel.setFont(AppTheme.FONT_TITLE);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        add(titleLabel, BorderLayout.NORTH);
+        // Judul Jendela
+        JLabel lblJudul = new JLabel("Daftar Karakter Game", JLabel.CENTER);
+        lblJudul.setFont(AppTheme.FONT_TITLE);
+        lblJudul.setBorder(AppTheme.PADDING_BORDER);
+        add(lblJudul, BorderLayout.NORTH);
 
-        // Panel untuk menampung list karakter
-        characterListPanel = new JPanel();
-        characterListPanel.setLayout(new BoxLayout(characterListPanel, BoxLayout.Y_AXIS));
+        listModel = new DefaultListModel<>();
+        listKarakter = new JList<>(listModel);
+        listKarakter.setFixedCellHeight(38);
+        listKarakter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        // ScrollPane vertikal saja
-        JScrollPane scrollPane = new JScrollPane(characterListPanel);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        // Custom Cell Renderer dengan AppTheme
+        listKarakter.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                
+                if (value instanceof Character) {
+                    Character ch = (Character) value;
+                    
+                    setText(String.format(" Character{name='%s', type=%s, level=%d, hp=%d, atk=%d, mana=%d, isAlive=%b}",
+                            ch.getName(), ch.getType(), ch.getLevel(), ch.getHp(), ch.getAtk(), ch.getMana(), ch.isAlive()));
+                    
+                    // PROPERTI TAMBAHAN 1: Tooltip detail HP dan ATK saat kursor diarahkan ke baris
+                    setToolTipText(String.format("Karakter: %s | Total HP: %d | Total ATK: %d", ch.getName(), ch.getHp(), ch.getAtk()));
+
+                    if (!isSelected) {
+                        // Memanggil warna dari AppTheme.colorFor()
+                        setBackground(AppTheme.colorFor(ch.getType()));
+                        
+                        // MINI-CHALLENGE: Level >= 5 teks warna EMAS dan TEBAL
+                        if (ch.getLevel() >= HIGH_LEVEL_THRESHOLD) {
+                            setForeground(AppTheme.COLOR_GOLD);
+                            setFont(AppTheme.FONT_HIGH_LEVEL);
+                        } else {
+                            setForeground(Color.BLACK);
+                            setFont(AppTheme.FONT_REGULAR);
+                        }
+                    } else {
+                        setBackground(new Color(70, 130, 180));
+                        setForeground(Color.WHITE);
+                    }
+
+                    // PROPERTI TAMBAHAN 2: Menambahkan border garis bawah tipis antar baris
+                    setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
+                }
+                return c;
+            }
+        });
+
+        JScrollPane scrollPane = new JScrollPane(listKarakter);
+        scrollPane.setBorder(AppTheme.PADDING_BORDER);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Label Statistik di Bawah menggunakan AppTheme.FONT_BODY
-        avgLevelLabel = new JLabel();
-        avgLevelLabel.setFont(AppTheme.FONT_BODY);
-        avgLevelLabel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-        add(avgLevelLabel, BorderLayout.SOUTH);
+        lblRataRataLevel = new JLabel(" Rata-rata Level Karakter: 0.0");
+        lblRataRataLevel.setFont(AppTheme.FONT_REGULAR);
+        lblRataRataLevel.setBorder(AppTheme.PADDING_BORDER);
+        add(lblRataRataLevel, BorderLayout.SOUTH);
 
-        // Muat data awal ke GUI
-        refreshData();
+        muatDataList();
         
-        // pack() agar ukuran jendela pas, lalu posisikan ke tengah
+        // Memakai pack() sesuai instruksi Bagian A
         pack();
         setLocationRelativeTo(null);
     }
 
-    public void refreshData() {
-        characterListPanel.removeAll();
+    public void muatDataList() {
+        listModel.clear();
+        double totalLevel = 0;
+        java.util.List<Character> listKarakterData = characterManager.getAllCharacters();
 
-        List<Character> characters = manager.getAllCharacters();
-        for (Character c : characters) {
-            // Membuat panel kartu untuk tiap karakter
-            JPanel card = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-            card.setBorder(BorderFactory.createCompoundBorder(
-                AppTheme.PADDING_BORDER,
-                BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)
-            ));
-            
-            // Menggunakan setOpaque(true) agar background warna role muncul
-            card.setOpaque(true);
-            card.setBackground(AppTheme.colorFor(c.getType().toString()));
-
-            // Label informasi karakter
-            JLabel infoLabel = new JLabel(c.toString());
-            infoLabel.setFont(AppTheme.FONT_MONO);
-            infoLabel.setForeground(Color.WHITE); // Teks putih agar kontras dengan warna kartu
-
-            // Mini-Challenge: Level >= 5 tampil dengan teks emas dan tebal
-            if (c.getLevel() >= AppTheme.MIN_LEVEL_HIGHLIGHT) {
-                infoLabel.setFont(new Font("Monospaced", Font.BOLD, 12));
-                infoLabel.setForeground(AppTheme.GOLD_HIGHLIGHT);
-            }
-
-            card.add(infoLabel);
-            characterListPanel.add(card);
+        for (Character ch : listKarakterData) {
+            listModel.addElement(ch);
+            totalLevel += ch.getLevel();
         }
 
-        // Format angka rata-rata level menjadi 2 desimal
-        double avg = manager.calculateAverageLevel();
-        avgLevelLabel.setText(String.format("📊 Rata-rata Level Karakter: %.2f", avg));
-
-        characterListPanel.revalidate();
-        characterListPanel.repaint();
+        double rataRata = listKarakterData.isEmpty() ? 0 : totalLevel / listKarakterData.size();
+        lblRataRataLevel.setText(String.format(" Rata-rata Level Karakter: %.2f", rataRata));
     }
 }
