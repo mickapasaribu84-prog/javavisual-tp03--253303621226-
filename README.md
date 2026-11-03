@@ -76,8 +76,9 @@ Analisis mendalam mengenai GUI, *Event-Driven*, dan prinsip arsitektur MVC dapat
 ## TP10: Character Manager Sprint #4 (Theming & MVC Analysis)
 
 - **Screenshot Sesudah (v0.4 - AppTheme):** 
-  *(screenshot hasil tampilan aplikasi yang terbaru sudah disimpan di folder project dengan nama `output_TP10.png`)*
-
+  - **Screenshot Sesudah (v0.4 - AppTheme):**
+  ![Tampilan v0.4 AppTheme](./output_TP10.png)
+  
 - **Penjelasan Singkat:**
   Seluruh properti visual seperti warna, font, dan border dipindahkan secara terpusat ke kelas `AppTheme` pada layer **View**. Hal ini memastikan bahwa layer **Model** (`Character.java`) tetap murni tanpa terikat pustaka GUI (`java.awt`).
 
