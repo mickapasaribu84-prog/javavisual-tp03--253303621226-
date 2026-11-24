@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== Character Manager Sprint #3 (TP8 - GUI) ===");
+        System.out.println("=== Character Manager Sprint #6 (TP14) ===");
 
         // 1. Inisialisasi Service Manager
         CharacterManager manager = new CharacterManager();

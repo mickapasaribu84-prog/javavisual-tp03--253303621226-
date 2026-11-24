@@ -1,65 +1,27 @@
-# TP12 — Layout Management & Panel Bersarang (Sprint #5)
+## TP14 Manajer Karakter Sprint #6
 
-## 📐 Section TP12: Wireframe / Diagram Struktur Layout
+### Screenshot Pengujian Form
+1. **Error Nama Kosong**: <img src="./tp14-error-kosong.png" width="500" alt="Error Nama Kosong">
+2. **Error Nama Duplikat**: <img src="./tp14-error-duplikat.png" width="500" alt="Error Nama Duplikat">
+3. **Sukses dengan Kartu Baru**: <img src="./tp14-suksestersimpan-kartu.png" width="500" alt="Sukses Kartu Baru">
 
-    +-------------------------------------------------------------------+
-    |                        NORTH: Header Panel                        |
-    +---------------------------------------------------+---------------+
-    |                                                   |               |
-    |                                                   |  EAST:        |
-    |                  CENTER:                          |  Legenda      |
-    |              JScrollPane                          |  Role         |
-    |         (Panel Daftar Karakter)                   |  (BoxLayout   |
-    |                                                   |   Y_AXIS)     |
-    |                                                   |               |
-    +---------------------------------------------------+---------------+
-    |                  SOUTH: Action Panel (FlowLayout)                 |
-    |             [Tambah Karakter] [Refresh Data] [Filter Role]        |
-    +---------------------------------------------------+---------------+
-    |  SOUTH: Status Bar (BorderLayout)                                 |
-    |  Status: Berjalan Normal | Total Karakter: 14                v0.5 |
-    +---------------------------------------------------+---------------+
+### Tabel Uji Validasi (Bagian B)
+| No | Input | Hasil Diharapkan | Hasil Nyata | Lapisan yang Menangkap |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | Nama: `""`, Role: `WARRIOR`, Level: `1` | Ditolak: `"Nama wajib diisi"` | *(sesuai hasil uji)* | View (`validateName`) |
+| 2 | Nama: `"   "`, Role: `WARRIOR`, Level: `1` | Ditolak: `"Nama wajib diisi"` | *(sesuai hasil uji)* | View (`validateName`) |
+| 3 | Nama: `"Li"`, Role: `WARRIOR`, Level: `1` | Ditolak: `"Nama harus 3-20 karakter"` | *(sesuai hasil uji)* | View (`validateName`) |
+| 4 | Nama: `"Gandalf  Putih"`, Role: `MAGE`, Level: `10` | Ditolak: `"Nama tidak boleh mengandung spasi ganda"` | *(sesuai hasil uji)* | View (`validateName`) |
+| 5 | Nama: `"Hero123"`, Role: `WARRIOR`, Level: `1` | Ditolak: `"Nama hanya huruf dan spasi"` | *(sesuai hasil uji)* | View (`validateName`) |
+| 6 | Nama duplikat (misal `"Arjuna"`), Role: `WARRIOR`, Level: `1` | Ditolak: `"Nama sudah dipakai"` | *(sesuai hasil uji)* | View (`validateName` / `isNameTaken`) |
+| 7 | Nama: `"Merlin"`, Role: `MAGE`, Level: `65` | Ditolak: `"MAGE maksimal level 60"` | *(sesuai hasil uji)* | Model (`Character`) |
+| 8 | Tambah karakter ke-21 saat sudah ada 20 karakter | Ditolak: `"Kapasitas karakter penuh (maksimal 20)"` | *(sesuai hasil uji)* | Model (`CharacterManager`) |
 
----
+**Catatan Perbedaan & Perbaikan:**
+- Jika ada baris dengan hasil nyata berbeda dari harapan, tulis di sini kasusnya, penyebabnya, dan perbaikan yang dilakukan (misalnya `[]` jika seluruh 8 kasus sudah sesuai harapan).
 
-## 📸 Dokumentasi 3 Screenshot Kondisi Jendela
+### Kompromi Sementara
+Pada tahap ini, handler tombol simpan dan `Enter` pada `nameField` masih menggunakan `ActionListener` minimal yang memanggil `onSave()` secara langsung. Pemanggilan `manager.addCharacter(...)` juga masih dilakukan langsung dari `CharacterFormPanel` melalui objek `CharacterManager` yang diinjeksikan agar alur validasi dan pembaruan daftar cepat terhubung. Kompromi ini dipilih supaya fokus utama tetap pada kejelasan pemisahan aturan View vs. Model sebelum diperhalus pada iterasi berikutnya.
 
-- **Ukuran Awal (*Initial State*):**  
-  ![Ukuran Awal](./output_tp12_awal.png)
-
-- **Jendela Dilebarkan (*Expanded Window*):**  
-  ![Jendela Dilebarkan](./output_tp12_lebar.png)
-
-- **Jendela Dikecilkan (*Minimized Window / Scrollbar Tampak*):**  
-  ![Jendela Dikecilkan](./output_tp12_kecil.png)
-
----
-
-## 📊 Tabel Pengamatan Resize (Prediksi vs Hasil)
-
-| Kondisi Jendela | Prediksi Perilaku Layout | Hasil Pengamatan Aktual |
-| :--- | :--- | :--- |
-| **Ukuran Awal** | Header di `NORTH`, daftar kartu karakter di `CENTER`, legenda di `EAST`, panel tombol aksi dan status bar di `SOUTH` tampil proporsional. | Sesuai prediksi, seluruh komponen tertata rapi pada wilayah *BorderLayout* masing-masing. |
-| **Dilebarkan** | Area daftar karakter dan header meregang secara horizontal, sementara panel legenda di `EAST` mempertahankan lebar tetapnya. | Sesuai prediksi, layout responsif secara konsisten tanpa ada komponen yang rusak. |
-| **Dikecilkan** | Area daftar menyempit dan `JScrollPane` otomatis mengaktifkan bilah gulir (*scrollbar*) vertikal dan horizontal. | Sesuai prediksi, *scrollbar* aktif dengan sempurna sehingga seluruh konten data tetap dapat diakses. |
-
----
-
-## 🏗️ Penjelasan Struktur Panel Bersarang
-Aplikasi ini menerapkan arsitektur panel bersarang (*nested panels*) berbasis **`BorderLayout`** sebagai kerangka utama kontainer `JFrame`. Pada wilayah `CENTER`, daftar kartu karakter dibungkus oleh `JPanel` berorientasi vertikal (`BoxLayout`) yang dimasukkan ke dalam **`JScrollPane`** untuk menyediakan fitur pengguliran otomatis. Wilayah `EAST` menampung panel legenda tipe karakter menggunakan `BoxLayout` (sumbu `Y_AXIS`), sedangkan wilayah `SOUTH` mengintegrasikan panel tombol kontrol ber-layout **`FlowLayout`** dan bar status ber-layout **`BorderLayout`**. Desain hirarki ini memastikan setiap bagian antarmuka mengelola tata letaknya secara terisolasi, rapi, dan fleksibel.
-
----
-
-## ⚙️ Alasan Panel Tambahan & Layout yang Ditolak
-
-- **Panel Tambahan & Layout Dipilih (`FlowLayout`):**  
-  Saya menambahkan panel tombol aksi (*placeholder*) di wilayah `SOUTH` tepat di atas bar status menggunakan **`FlowLayout`**. Layout ini dipilih karena sangat ideal untuk menyusun tombol kontrol secara horizontal di tengah secara alami tanpa memaksakan ukuran tombol menjadi melar secara kaku.
-- **Layout yang Ditolak (`GridLayout`):**  
-  Saya menolak penggunaan `GridLayout` untuk panel tombol aksi ini karena `GridLayout` akan memaksa setiap tombol memiliki ukuran lebar dan tinggi yang seragam serta meregang penuh memenuhi area kontainer, sehingga tampilannya terlihat tidak proporsional dan kurang natural.
-
----
-
-## 🔗 Link Google Docs (Analisis Bagian D)
-
-Tautan dokumentasi analisis lengkap (Bagian D — minimal 500 kata):  
-👉 **[Link Google Docs Analisis Layout & MVC TP12](https://docs.google.com/document/d/1PG-sFx65DJDcDHFUAvyF3hKqsU9fOQjgY-5h5yJhGjA/edit?usp=sharing)**
+### Esai Bagian D (Google Docs)
+[Link Google Docs Bagian D](https://docs.google.com/document/d/12qTgE9cTWLQBbtKdTEHmTZvPOyBmdu66WxyBiQsy-0Y/edit?usp=sharing)

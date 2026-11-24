@@ -23,4 +23,3 @@ public class AppTheme {
         }
     }
 }
-// TP12: penyesuaian gaya komponen antarmuka

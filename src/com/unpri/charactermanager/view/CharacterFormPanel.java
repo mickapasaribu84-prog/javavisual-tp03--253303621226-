@@ -22,7 +22,7 @@ import com.unpri.charactermanager.model.CharacterType;
 import com.unpri.charactermanager.service.CharacterManager;
 
 /** Form "Tambah Karakter": membaca input, memvalidasi, lalu menyerahkan ke Model. */
-public class CharacterFormPanel extends JPanel {
+public class CharacterFormPanel extends JPanel { // TP14 form input & validasi
 
     private final CharacterManager manager;   // tujuan data yang lolos validasi
     private final Runnable onAdded;           // dipanggil setelah sukses (untuk menyegarkan daftar)

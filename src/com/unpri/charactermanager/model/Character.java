@@ -1,4 +1,4 @@
-﻿package com.unpri.charactermanager.model;
+package com.unpri.charactermanager.model;
 
 import java.util.Objects;
 
@@ -12,9 +12,19 @@ public class Character {
     private boolean isAlive;
 
     public Character(String name, CharacterType type, int level) {
-        if (level < 0) {
-            throw new IllegalArgumentException("Level tidak boleh negatif");
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Nama tidak boleh kosong");
         }
+        if (type == null) {
+            throw new IllegalArgumentException("Role wajib dipilih");
+        }
+        if (level < 1 || level > 99) {
+            throw new IllegalArgumentException("Level harus 1-99");
+        }
+        if (type == CharacterType.MAGE && level > 60) {
+           throw new IllegalArgumentException("MAGE maksimal level 60");
+        }
+
         this.name = name;
         this.type = type;
         this.level = level;
@@ -29,6 +39,17 @@ public class Character {
     public CharacterType getType() { return type; }
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setMana(int mana) {
+        if (mana < 0) {
+            throw new IllegalArgumentException("Mana tidak boleh negatif");
+        }
+        this.mana = mana;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,4 +1,4 @@
-﻿package com.unpri.charactermanager.service;
+package com.unpri.charactermanager.service;
 
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterType;
@@ -13,8 +13,11 @@ public class CharacterManager {
     }
 
     // --- Bagian A: Core Methods ---
-    public void addCharacter(Character c) {
+   public void addCharacter(Character c) {
         if (c == null) throw new IllegalArgumentException("Karakter tidak boleh null.");
+        if (characters.size() >= 20) {
+            throw new IllegalArgumentException("Kapasitas karakter penuh (maksimal 20)");
+        }
         for (Character existing : characters) {
             if (existing.equals(c)) {
                 throw new IllegalArgumentException("Karakter dengan nama '" + c.getName() + "' sudah ada!");
@@ -46,6 +49,19 @@ public class CharacterManager {
     // Defensive copy: mengembalikan salinan list, bukan referensi asli
     public List<Character> getAllCharacters() {
         return new ArrayList<>(characters);
+    }
+
+    /** Mengembalikan true jika sudah ada karakter bernama sama (tanpa membedakan huruf besar/kecil). */
+    public boolean isNameTaken(String name) {
+        if (name == null) {
+            return false;
+        }
+        for (Character c : getAllCharacters()) {
+            if (c.getName() != null && c.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // --- Bagian B: Mini-Challenge ---
