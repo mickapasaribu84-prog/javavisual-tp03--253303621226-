@@ -1,4 +1,4 @@
-﻿package com.unpri.charactermanager.view;
+package com.unpri.charactermanager.view;
 
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.service.CharacterManager;
@@ -15,16 +15,19 @@ public class MainWindow extends JFrame {
 
     public MainWindow(CharacterManager characterManager) {
         this.characterManager = characterManager;
-        setTitle("Character Manager - Sprint #3 (TP8)");
-        setSize(640, 460);
+        setTitle("Character Manager - Sprint #4 (v0.4)");
+        setSize(660, 480);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBorder(new EmptyBorder(10, 10, 5, 10));
-        JLabel titleLabel = new JLabel("Daftar Karakter Game");
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        headerPanel.setBackground(AppTheme.PRIMARY_COLOR);
+        headerPanel.setBorder(new EmptyBorder(10, 12, 10, 12));
+
+        JLabel titleLabel = new JLabel("Character Manager - Sprint #4 (Theming)");
+        titleLabel.setFont(AppTheme.TITLE_FONT);
+        titleLabel.setForeground(Color.WHITE);
         headerPanel.add(titleLabel);
         add(headerPanel, BorderLayout.NORTH);
 
@@ -33,12 +36,13 @@ public class MainWindow extends JFrame {
         characterListPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         JScrollPane scrollPane = new JScrollPane(characterListPanel);
+        scrollPane.setBorder(AppTheme.DEFAULT_BORDER);
         add(scrollPane, BorderLayout.CENTER);
 
         JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        statsPanel.setBorder(new EmptyBorder(5, 10, 10, 10));
+        statsPanel.setBorder(new EmptyBorder(6, 12, 10, 12));
         avgLevelLabel = new JLabel();
-        avgLevelLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
+        avgLevelLabel.setFont(AppTheme.GOLD_BOLD_FONT);
         statsPanel.add(avgLevelLabel);
         add(statsPanel, BorderLayout.SOUTH);
 
@@ -50,12 +54,27 @@ public class MainWindow extends JFrame {
         List<Character> characters = characterManager.getAllCharacters();
 
         for (Character c : characters) {
-            JLabel itemLabel = new JLabel(
-                c.getName() + " [" + c.getType() + "] - Level " + c.getLevel()
-            );
-            itemLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
-            itemLabel.setBorder(new EmptyBorder(4, 6, 4, 6));
-            characterListPanel.add(itemLabel);
+            JPanel card = new JPanel(new BorderLayout(8, 4));
+            card.setBackground(AppTheme.colorFor(c.getType()));
+            card.setBorder(BorderFactory.createCompoundBorder(
+                AppTheme.DEFAULT_BORDER,
+                new EmptyBorder(8, 10, 8, 10)
+            ));
+
+            JLabel nameLabel = new JLabel(c.getName() + " [" + c.getType() + "]");
+            if (c.getLevel() >= 5) {
+                nameLabel.setFont(AppTheme.GOLD_BOLD_FONT);
+            } else {
+                nameLabel.setFont(AppTheme.REGULAR_FONT);
+            }
+
+            JLabel levelLabel = new JLabel("Level " + c.getLevel());
+            levelLabel.setFont(AppTheme.REGULAR_FONT);
+
+            card.add(nameLabel, BorderLayout.CENTER);
+            card.add(levelLabel, BorderLayout.EAST);
+            characterListPanel.add(card);
+            characterListPanel.add(Box.createVerticalStrut(6));
         }
 
         avgLevelLabel.setText(

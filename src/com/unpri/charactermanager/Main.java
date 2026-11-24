@@ -1,4 +1,4 @@
-﻿package com.unpri.charactermanager;
+package com.unpri.charactermanager;
 
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterType;
@@ -9,20 +9,32 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("=== Character Manager Sprint #3 (TP8 - GUI) ===");
+
+        // 1. Inisialisasi Service Manager
         CharacterManager manager = new CharacterManager();
+
+        // 2. Menambahkan Karakter (Total minimal 5 karakter sesuai instruksi TP8)
         try {
-            manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
-            manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
-            manager.addCharacter(new Character("Robin", CharacterType.ARCHER, 4));
-            manager.addCharacter(new Character("Srikandi", CharacterType.WARRIOR, 6));
-            manager.addCharacter(new Character("Zephyr", CharacterType.MAGE, 2));
+           manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+manager.addCharacter(new Character("Robin", CharacterType.ARCHER, 4));
+manager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7));
+manager.addCharacter(new Character("Shadow", CharacterType.ROGUE, 6));
+manager.addCharacter(new Character("Zilong", CharacterType.WARRIOR, 10));
+manager.addCharacter(new Character("Eudora", CharacterType.MAGE, 8));
+manager.addCharacter(new Character("Layla", CharacterType.ARCHER, 2));
         } catch (IllegalArgumentException e) {
-            System.out.println("Error tambah karakter: " + e.getMessage());
+            System.out.println("Gagal menambah karakter: " + e.getMessage());
         }
 
-        SwingUtilities.invokeLater(() -> {
-            MainWindow window = new MainWindow(manager);
-            window.setVisible(true);
+        // 3. Menjalankan GUI MainWindow menggunakan SwingUtilities.invokeLater (Aman untuk EDT)
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                MainWindow window = new MainWindow(manager);
+                window.setVisible(true);
+            }
         });
     }
 }
