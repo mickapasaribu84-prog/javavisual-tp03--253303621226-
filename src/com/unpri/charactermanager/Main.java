@@ -16,14 +16,13 @@ public class Main {
 
         // 2. Menambahkan Karakter (Total minimal 5 karakter sesuai instruksi TP8)
         try {
-           manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
-manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
-manager.addCharacter(new Character("Robin", CharacterType.ARCHER, 4));
-manager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7));
-manager.addCharacter(new Character("Shadow", CharacterType.ROGUE, 6));
-manager.addCharacter(new Character("Zilong", CharacterType.WARRIOR, 10));
-manager.addCharacter(new Character("Eudora", CharacterType.MAGE, 8));
-manager.addCharacter(new Character("Layla", CharacterType.ARCHER, 2));
+            manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+            manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+            manager.addCharacter(new Character("Robin", CharacterType.ARCHER, 4));
+            // Tambahan 2 karakter baru untuk TP8:
+            manager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7)); // Tank/Warrior level tinggi
+            manager.addCharacter(new Character("Shadow", CharacterType.ROGUE, 6));     // Rogue gesit
+            manager.addCharacter(new Character("Zilong", CharacterType.WARRIOR, 10));
         } catch (IllegalArgumentException e) {
             System.out.println("Gagal menambah karakter: " + e.getMessage());
         }

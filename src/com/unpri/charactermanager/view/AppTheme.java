@@ -6,8 +6,6 @@ import java.awt.*;
 
 public class AppTheme {
     public static final Color PRIMARY_COLOR = new Color(41, 128, 185); // Biru
-    public static final Color ERROR = new Color(192, 57, 43);          // Merah untuk pesan error
-    public static final Color SUCCESS = new Color(39, 174, 96);        // Hijau untuk pesan sukses
     public static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 16);
     public static final Font REGULAR_FONT = new Font("Arial", Font.PLAIN, 12);
     public static final Font GOLD_BOLD_FONT = new Font("Arial", Font.BOLD, 12);
@@ -23,4 +21,3 @@ public class AppTheme {
         }
     }
 }
-// TP12: penyesuaian gaya komponen antarmuka

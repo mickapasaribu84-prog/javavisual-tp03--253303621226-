@@ -16,30 +16,30 @@ public class MainWindow extends JFrame {
 
     public MainWindow(CharacterManager characterManager) {
         this.characterManager = characterManager;
-        setTitle("Character Manager - Sprint #6 (v0.6)");
-        setSize(960, 580);
+        setTitle("Character Manager - Sprint #5 (TP12)");
+        setSize(750, 580);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Root Layout menggunakan BorderLayout
         setLayout(new BorderLayout(10, 10));
 
         // --- WILAYAH NORTH: Header ---
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(AppTheme.PRIMARY_COLOR);
         headerPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        JLabel titleLabel = new JLabel("Daftar Karakter Game");
+        JLabel titleLabel = new JLabel("Daftar Karakter Game (Layout v0.5)");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(AppTheme.TITLE_FONT);
         headerPanel.add(titleLabel);
         add(headerPanel, BorderLayout.NORTH);
 
-        // --- WILAYAH WEST: Form Input Dinamis (Sprint #6) ---
-        add(new CharacterFormPanel(characterManager, this::refreshData), BorderLayout.WEST);
-
         // --- WILAYAH CENTER: Daftar Karakter (JScrollPane) ---
         characterListPanel = new JPanel();
         characterListPanel.setLayout(new BoxLayout(characterListPanel, BoxLayout.Y_AXIS));
         characterListPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        loadCharacters(); // Memuat minimal 8 karakter
 
         JScrollPane scrollPane = new JScrollPane(characterListPanel);
         scrollPane.setPreferredSize(new Dimension(450, 350));
@@ -62,25 +62,50 @@ public class MainWindow extends JFrame {
         legendPanel.add(Box.createGlue());
         add(legendPanel, BorderLayout.EAST);
 
-        // --- WILAYAH SOUTH: Bar Status ---
+        // --- WILAYAH SOUTH: Container Pembungkus (Panel Aksi + Bar Status) ---
+        JPanel southContainer = new JPanel();
+        southContainer.setLayout(new BoxLayout(southContainer, BoxLayout.Y_AXIS));
+
+        // 1. Panel Tambahan (Mini-Challenge: FlowLayout untuk Tombol Aksi/Placeholder)
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        JButton btnAdd = new JButton("Tambah Karakter");
+        JButton btnRefresh = new JButton("Refresh Data");
+        JButton btnFilter = new JButton("Filter Role");
+        
+        actionPanel.add(btnAdd);
+        actionPanel.add(btnRefresh);
+        actionPanel.add(btnFilter);
+        southContainer.add(actionPanel);
+
+        // 2. Bar Status (BorderLayout)
         JPanel statusPanel = new JPanel(new BorderLayout());
         statusPanel.setBorder(new EmptyBorder(5, 10, 5, 10));
-
-        statusLabel = new JLabel();
-        statusLabel.setFont(AppTheme.REGULAR_FONT);
-        JLabel versionLabel = new JLabel("v0.6");
-        versionLabel.setFont(AppTheme.REGULAR_FONT);
-
+        
+        statusLabel = new JLabel("Status: Berjalan Normal | Total Karakter: " + characterManager.getAllCharacters().size());
+        JLabel versionLabel = new JLabel("v0.5");
+        
         statusPanel.add(statusLabel, BorderLayout.WEST);
         statusPanel.add(versionLabel, BorderLayout.EAST);
-        add(statusPanel, BorderLayout.SOUTH);
+        southContainer.add(statusPanel);
 
-        refreshData();
+        add(southContainer, BorderLayout.SOUTH);
     }
 
-    public void refreshData() {
+    private void loadCharacters() {
         characterListPanel.removeAll();
         List<Character> characters = characterManager.getAllCharacters();
+
+        if (characters.size() < 8) {
+            characterManager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+            characterManager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+            characterManager.addCharacter(new Character("Robin", CharacterType.ARCHER, 4));
+            characterManager.addCharacter(new Character("Gatotkaca", CharacterType.WARRIOR, 7));
+            characterManager.addCharacter(new Character("Shadow", CharacterType.ROGUE, 6));
+            characterManager.addCharacter(new Character("Zilong", CharacterType.WARRIOR, 10));
+            characterManager.addCharacter(new Character("Eudora", CharacterType.MAGE, 8));
+            characterManager.addCharacter(new Character("Layla", CharacterType.ARCHER, 2));
+            characters = characterManager.getAllCharacters();
+        }
 
         for (Character c : characters) {
             JPanel card = new JPanel(new BorderLayout());
@@ -92,7 +117,7 @@ public class MainWindow extends JFrame {
                 new EmptyBorder(8, 12, 8, 12)
             ));
 
-            JLabel leftLabel = new JLabel("⚔️ " + c.getName() + "  •  [" + c.getType() + "]");
+            JLabel leftLabel = new JLabel("<html><b>⚔️ " + c.getName() + "  •  [" + c.getType() + "]");
             if (c.getLevel() >= 5) {
                 leftLabel.setFont(new Font("Arial", Font.BOLD, 13));
                 leftLabel.setForeground(new Color(160, 100, 0));
@@ -112,12 +137,7 @@ public class MainWindow extends JFrame {
             characterListPanel.add(card);
             characterListPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         }
-
-        statusLabel.setText(
-            "Status: Berjalan Normal | Total Karakter: " + characters.size() +
-            " | Rata-rata Level: " + String.format("%.2f", characterManager.getAverageLevel())
-        );
-
+        
         characterListPanel.revalidate();
         characterListPanel.repaint();
     }
